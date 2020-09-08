@@ -7,16 +7,17 @@ using UnityEngine.UI;
 
 public class Agent : MonoBehaviour
 {
-    public List<MoveTo> Commands;
+    public List<CommandBase> Commandlist;
     public GameObject TargetSphere;
-    OnClick click;
-    public int counter;
+
+
     public int cyclenum = 0;
     public bool directionswitch = true;
     public GameObject floatingUI;
     public Text info;
     public bool countbool;
-    public int counterforward;
+
+    public int commandindex;
     //Variable that controls processing method
     // forward, backward, ping pong
     // could be an enum
@@ -26,51 +27,52 @@ public class Agent : MonoBehaviour
     void Start()
     {
         agent = gameObject.GetComponent<NavMeshAgent>();
-        Commands = new List<MoveTo>();
+        Commandlist = new List<CommandBase>();
     }
 
     void Update()
     {
-        
-        
-            if (Input.GetKeyUp(KeyCode.Tab))
+
+
+        if (Input.GetKeyUp(KeyCode.Tab))
+        {
+            Cycle();
+        }
+        else if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            StopandClear();
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            if (cyclenum == 0)
             {
-                Cycle();
+                ProcessCommands();
             }
-            else if (Input.GetKeyUp(KeyCode.Escape))
+            if (cyclenum == 1)
             {
-                StopandClear();
+                ProcessBackwards();
             }
-            else if (Input.GetKeyUp(KeyCode.Space))
+            if (cyclenum == 2)
             {
-                if (cyclenum == 0)
-                {
-                  ProcessCommands();
-                }
-                if (cyclenum == 1)
-                {
-                  ProcessBackwards();
-                }
-                if ( cyclenum == 2)
-                {
-                  PingPong();
-                }
+                PingPong();
             }
-        Status();
+        }
+        UIStatus();
+
     }
 
     public void AddMoveCommand(Vector3 Destination)
     {
         MoveTo MT = new MoveTo(agent);
         MT.DestinationPoint = Destination;
-        Commands.Add(MT);
+        Commandlist.Add(MT);
         Instantiate(TargetSphere, Destination, Quaternion.identity);
-        Debug.Log("CMDlist count:" + Commands.Count);
+        Debug.Log("CMDlist count:" + Commandlist.Count);
 
     }
     public void Cycle()
     {
-        if(cyclenum == 2)
+        if (cyclenum == 2)
         {
             cyclenum = 0;
         }
@@ -82,27 +84,27 @@ public class Agent : MonoBehaviour
 
     public void StopandClear()
     {
-        Commands.Clear();
+        Commandlist.Clear();
 
         foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Target"))
         {
             Destroy(obj);
         }
-        Commands = new List<MoveTo>();
+        //Commands = new List<MoveTo>();
     }
 
     public void ProcessCommands()
     {
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            if (Commands.Count == 0)
+            if (Commandlist.Count == 0)
             {
                 return;
             }
-            if (counterforward < Commands.Count)
+            if (commandindex < Commandlist.Count)
             {
-                Commands[counterforward].Execute(Commands[counterforward].DestinationPoint);
-                counterforward++;
+                Commandlist[commandindex].Execute();
+                commandindex++;
             }
         }
 
@@ -110,33 +112,33 @@ public class Agent : MonoBehaviour
 
     public void ProcessBackwards()
     {
-    
+
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
-            if (Commands.Count == 0)
+            if (Commandlist.Count == 0)
             {
                 return;
             }
             if (countbool == false)
             {
-                counter = Commands.Count - 1;
-                Commands[counter].Execute(Commands[counter].DestinationPoint);
+                commandindex = Commandlist.Count - 1;
+                Commandlist[commandindex].Execute();
                 countbool = true;
                 return;
             }
-            if (counter >= 0)
+            if (commandindex >= 0)
             {
-                Commands[counter].Execute(Commands[counter].DestinationPoint);
+                Commandlist[commandindex].Execute();
 
             }
             else
             {
-                counter = 0;
+                commandindex = 0;
                 countbool = false;
                 return;
             }
         }
-        counter--;
+        commandindex--;
     }
 
     public void PingPong()
@@ -145,53 +147,53 @@ public class Agent : MonoBehaviour
         {
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                if (Commands.Count == 0)
+                if (Commandlist.Count == 0)
                 {
                     return;
                 }
-                if (counterforward < Commands.Count)
+                if (commandindex < Commandlist.Count)
                 {
-                    Commands[counterforward].Execute(Commands[counterforward].DestinationPoint);
-                    counterforward++;
+                    Commandlist[commandindex].Execute();
+                    commandindex++;
                 }
             }
             directionswitch = false;
         }
-        if(directionswitch == false)
+        if (directionswitch == false)
         {
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
-                if (Commands.Count == 0)
+                if (Commandlist.Count == 0)
                 {
                     return;
                 }
                 if (countbool == false)
                 {
-                    counter = Commands.Count - 1;
-                    Commands[counter].Execute(Commands[counter].DestinationPoint);
+                    commandindex = Commandlist.Count - 1;
+                    Commandlist[commandindex].Execute();
                     countbool = true;
                     return;
                 }
-                if (counter >= 0)
+                if (commandindex >= 0)
                 {
-                    Commands[counter].Execute(Commands[counter].DestinationPoint);
+                    Commandlist[commandindex].Execute();
 
                 }
                 else
                 {
-                    counter = 0;
+                    commandindex = 0;
                     countbool = false;
                     return;
                 }
             }
             directionswitch = true;
-            counter--;
+            commandindex--;
         }
     }
 
-    public void Status()
+    public void UIStatus()
     {
-        if(agent.isStopped == false)
+        if (agent.isStopped == false)
         {
             if (cyclenum == 0)
             {
@@ -201,7 +203,7 @@ public class Agent : MonoBehaviour
             {
                 info.text = "Backwards";
             }
-            if(cyclenum == 2)
+            if (cyclenum == 2)
             {
                 info.text = "Ping Pong";
             }

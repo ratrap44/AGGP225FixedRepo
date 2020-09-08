@@ -4,9 +4,13 @@ using UnityEngine;
 
 public abstract class CommandBase 
 {
-    public virtual void Execute(Vector3 DestinationPoint)
+    public virtual void Execute()
     {
 
     }
-   
+
+    public virtual void Undo()
+    {
+
+    }
 }

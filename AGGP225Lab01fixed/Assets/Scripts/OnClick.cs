@@ -18,7 +18,7 @@ public class OnClick : MonoBehaviour
         {
             Position();
         }
-       
+
     }
 
     public void Position()
@@ -34,20 +34,17 @@ public class OnClick : MonoBehaviour
 
             if (hit.collider.name == "floor")
             {
-                if (agent.Commands.Count == 0)
+                if (agent.Commandlist.Count == 0)
                 {
                     move.StartingPoint = Vector3.zero;
                     move.DestinationPoint = hit.transform.position;
                 }
                 else
                 {
-                    move.StartingPoint = agent.Commands[agent.Commands.Count - 1].DestinationPoint;
+                    move.StartingPoint = agent.AddMoveCommand(hit.point);
                     move.DestinationPoint = hit.transform.position;
                 }
             }
         }
 
     }
-
-   
-}
