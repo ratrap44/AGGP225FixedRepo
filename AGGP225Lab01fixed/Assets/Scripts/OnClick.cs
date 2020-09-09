@@ -41,10 +41,12 @@ public class OnClick : MonoBehaviour
                 }
                 else
                 {
-                    move.StartingPoint = agent.AddMoveCommand(hit.point);
+                    
+                    agent.AddMoveCommand(hit.point);
                     move.DestinationPoint = hit.transform.position;
                 }
             }
         }
 
     }
+}
