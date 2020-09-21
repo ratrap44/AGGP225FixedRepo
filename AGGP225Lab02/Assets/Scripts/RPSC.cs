@@ -2,46 +2,23 @@
 using System.Collections.Generic;
 using UnityEditor.Experimental.AssetImporters;
 using UnityEngine;
+using UnityEngine.UI;
 
-public enum ChallangeResult
-{
-    Win,
-    Lose,
-    Draw
-
-}
 
 [CreateAssetMenu(fileName = "RPS card", menuName = "card")]
 public class RPSC : ScriptableObject
 {
+    public Sprite cardpic;
+
+    public string cardName;
+
+
     
-     public enum Type
-     {
-        Rock,
-        Paper,
-        Scissors,
-        Water,
-        Air,
-        Sponge,
-        fire
+    public List<RPSC> loseto;
+    public List<RPSC> winto;
 
-     }
-    public Type cardtype;
-    public List<Type> loseto;
-    public List<Type> winto;
-
-    public ChallangeResult PerformChallenge(RPSC card)
-    {
-        if (cardtype == card.cardtype)
-        {
-            return ChallangeResult.Draw;
-        }
-        if (cardtype == Type.Rock && card.cardtype == Type.Paper)
-        {
-
-        }
-    }
   
- 
+
+
 }
 

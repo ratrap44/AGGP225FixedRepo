@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18297b78d13d69b468b067ddeb17b2c0, type: 3}
   m_Name: Fire
   m_EditorClassIdentifier: 
-  cardtype: 6
-  loseto: 000000000300000004000000
-  winto: 020000000500000001000000
+  cardpic: {fileID: 21300000, guid: 260f5d1b5890d1c418f89c08ba8f6e86, type: 3}
+  cardName: Fire
+  loseto:
+  - {fileID: 11400000, guid: 03f7ab0d6f8ccf54db8c1149ab5a75eb, type: 2}
+  - {fileID: 11400000, guid: 328d6f932d09dbe49a10a2ff88c792a3, type: 2}
+  - {fileID: 11400000, guid: d2d16def3772cbd4eab2222596c3de06, type: 2}
+  winto:
+  - {fileID: 11400000, guid: 9da8bc82c2e128d42a36ffac4055296f, type: 2}
+  - {fileID: 11400000, guid: c1f2b62b8b6a97e45a5e914a470de026, type: 2}
+  - {fileID: 11400000, guid: bac0238c000c46c4fa782eb6fe17c6d2, type: 2}

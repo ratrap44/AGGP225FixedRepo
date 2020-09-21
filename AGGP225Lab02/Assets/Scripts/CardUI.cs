@@ -6,20 +6,24 @@ using TMPro;
 
 public class CardUI : MonoBehaviour
 {
-    RPSC cardDef;
-    Image Art;
+    public RPSC cardDef;
+    public Image artWork;
+    public Text CardNameField;
     
 
     public void Start()
     {
-        if(cardDef)
+        if (cardDef)
         {
-            SetupCard();
+            setupCard();
         }
     }
-
-    public void SetupCard()
+    public void setupCard()
     {
-        
+        artWork.sprite = cardDef.cardpic;
+        //artWork.sprite = Sprite
+        // CastingCostField.text = cardDef.ArtistName;
+        CardNameField.text = cardDef.cardName;
+
     }
 }

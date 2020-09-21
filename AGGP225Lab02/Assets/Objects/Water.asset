@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18297b78d13d69b468b067ddeb17b2c0, type: 3}
   m_Name: Water
   m_EditorClassIdentifier: 
-  cardtype: 3
-  loseto: 040000000100000005000000
-  winto: 000000000600000002000000
+  cardpic: {fileID: 21300000, guid: fcedbc1584e1e594cab6d426a1a4ac3c, type: 3}
+  cardName: Water
+  loseto:
+  - {fileID: 11400000, guid: d2d16def3772cbd4eab2222596c3de06, type: 2}
+  - {fileID: 11400000, guid: bac0238c000c46c4fa782eb6fe17c6d2, type: 2}
+  - {fileID: 11400000, guid: c1f2b62b8b6a97e45a5e914a470de026, type: 2}
+  winto:
+  - {fileID: 11400000, guid: 9da8bc82c2e128d42a36ffac4055296f, type: 2}
+  - {fileID: 11400000, guid: db21202d75e091d4f9701055dbf792bd, type: 2}
+  - {fileID: 11400000, guid: 03f7ab0d6f8ccf54db8c1149ab5a75eb, type: 2}
